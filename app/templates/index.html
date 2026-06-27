@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}strom für alle — Startseite{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6 text-center">
+    <h1 class="display-5 fw-bold text-success mb-3">strom für alle</h1>
+    <p class="lead text-muted mb-1">Verwaltungsplattform der</p>
+    <p class="fw-semibold mb-4">EEG Strompool Feldkirchen Süd-West</p>
+    {% if request.session.get("user") %}
+    <a href="/members" class="btn btn-success btn-lg">Zur Mitgliederverwaltung</a>
+    {% else %}
+    <a href="/login" class="btn btn-success btn-lg">Anmelden</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
