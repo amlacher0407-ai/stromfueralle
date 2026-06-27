@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{% if member %}Mitglied bearbeiten{% else %}Neues Mitglied{% endif %} — strom für alle{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8 col-lg-6">
+    <h2 class="mb-4">{% if member %}Mitglied bearbeiten{% else %}Neues Mitglied anlegen{% endif %}</h2>
+
+    {% if member %}
+    <p class="text-muted mb-4">Mitgliedsnummer: <strong>{{ member.member_number }}</strong></p>
+    {% else %}
+    <p class="text-muted mb-4">Die Mitgliedsnummer wird automatisch vergeben.</p>
+    {% endif %}
+
+    <form method="post"
+          action="{% if member %}/members/{{ member.id }}/edit{% else %}/members/new{% endif %}">
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <label for="first_name" class="form-label">Vorname <span class="text-danger">*</span></label>
+          <input type="text" id="first_name" name="first_name" class="form-control"
+                 value="{{ member.first_name if member else '' }}" required>
+        </div>
+        <div class="col-sm-6">
+          <label for="last_name" class="form-label">Nachname <span class="text-danger">*</span></label>
+          <input type="text" id="last_name" name="last_name" class="form-control"
+                 value="{{ member.last_name if member else '' }}" required>
+        </div>
+        <div class="col-12">
+          <label for="address" class="form-label">Adresse <span class="text-danger">*</span></label>
+          <input type="text" id="address" name="address" class="form-control"
+                 value="{{ member.address if member else '' }}" required
+                 placeholder="Straße, PLZ Ort">
+        </div>
+        <div class="col-12">
+          <label for="email" class="form-label">E-Mail <span class="text-danger">*</span></label>
+          <input type="email" id="email" name="email" class="form-control"
+                 value="{{ member.email if member else '' }}" required>
+        </div>
+        <div class="col-12">
+          <label for="iban" class="form-label">IBAN <span class="text-muted">(optional)</span></label>
+          <input type="text" id="iban" name="iban" class="form-control font-monospace"
+                 value="{{ member.iban if member and member.iban else '' }}"
+                 placeholder="AT12 3456 7890 1234 5678">
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn btn-success">
+          {% if member %}Speichern{% else %}Anlegen{% endif %}
+        </button>
+        <a href="/members" class="btn btn-outline-secondary">Abbrechen</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

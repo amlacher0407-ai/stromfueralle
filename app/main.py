@@ -7,7 +7,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app.config import settings
 from app.dependencies import NotAuthenticatedException
-from app.routes import auth, live
+from app.routes import auth, live, members
 
 
 @asynccontextmanager
@@ -24,6 +24,7 @@ def create_app() -> FastAPI:
     app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
     app.include_router(auth.router)
+    app.include_router(members.router)
     app.include_router(live.router)
 
     @app.exception_handler(NotAuthenticatedException)
